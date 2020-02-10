@@ -89,13 +89,13 @@ def main(username, password):
 
 
 if __name__=="__main__":
-    configs = json.loads(open('./config.json', 'r').read())
-    username = configs["username"]
-    password = configs["password"]
-    hour = configs["schedule"]["hour"]
-    minute = configs["schedule"]["minute"]
-    
-    if not username or not password or not hour or not minute:
+    if os.path.exists('./config.json'):
+        configs = json.loads(open('./config.json', 'r').read())
+        username = configs["username"]
+        password = configs["password"]
+        hour = configs["schedule"]["hour"]
+        minute = configs["schedule"]["minute"]
+    else:
         username = input("👤 浙大统一认证用户名: ")
         password = getpass.getpass('🔑 浙大统一认证密码: ')
         print("⏲  请输入定时时间（默认每天6:05）")
