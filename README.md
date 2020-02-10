@@ -12,7 +12,7 @@
     ```bash
     $ git clone https://github.com/Tishacy/ZJU-nCov-Hitcarder.git
     $ cd ZJU-nCov-Hitcarder
-```
+    ```
     
 2. 安装依赖
 
