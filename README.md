@@ -1,7 +1,10 @@
 # ZJU-nCov-Hitcarder
 
-浙大nCov健康打卡自动定时脚本
+浙大nCov肺炎健康打卡定时自动脚本
 
+ - 可定时，默认为每天6点5分
+ - 默认每次提交上次所提交的内容（只有时间部分更新）
+ 
 <img src="https://github.com/Tishacy/ZJU-nCov-Hitcarder/raw/master/demo.png" width="500px"/>
 
 
