@@ -24,11 +24,11 @@
        
    2. 安装对应操作系统版本的phantomjs。
 
-       写的时候用的是macOS，所以项目中默认存在的phantomjs为macOS版。其他对应操作系统的phantomjs可在https://phantomjs.org/download.html下载，并将下载后解压的到`phantomjs`文件（一般在`/bin`目录下）复制到本项目目录即可。
+       写的时候用的是macOS，所以项目中默认存在的phantomjs为macOS版。其他对应操作系统的phantomjs可在 [https://phantomjs.org/download.html](https://phantomjs.org/download.html) 下载，并将下载后解压的到`phantomjs`文件（一般在`/bin`目录下）复制到本项目目录即可。
 
 3. 将config.json.templ模板文件重命名为config.json文件，并修改 config.json中的配置
     
-    ```json
+    ```javascript
     {
         "username": "你的浙大统一认证平台用户名",
         "password": "你的浙大统一认证平台密码",
