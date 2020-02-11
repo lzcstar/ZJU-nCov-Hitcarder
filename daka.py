@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import requests, json, re
-import time, datetime, os
+import time, datetime, os, sys
 import getpass
 from selenium import webdriver
 # from selenium.webdriver.chrome.options import Options
@@ -14,12 +14,13 @@ class DaKa(object):
         # chrome_options = Options()
         # chrome_options.add_argument('--headless')
         # self.driver = webdriver.Chrome('./chromedriver', chrome_options=chrome_options)
-        self.driver = webdriver.PhantomJS('./phantomjs')
+        self.driver = self._set_driver()
         self.base_url = "https://healthreport.zju.edu.cn/ncov/wap/default/index"
         self.save_url = "https://healthreport.zju.edu.cn/ncov/wap/default/save"
         self.sess = requests.Session()
     
     def login(self):
+        """Login to ZJU platform"""
         driver = self.driver
         driver.get("https://zjuam.zju.edu.cn/cas/login?service=https%3A%2F%2Fhealthreport.zju.edu.cn%2Fa_zju%2Fapi%2Fsso%2Findex%3Fredirect%3Dhttps%253A%252F%252Fhealthreport.zju.edu.cn%252Fncov%252Fwap%252Fdefault%252Findex")
         driver.find_element_by_id("username").send_keys(self.username)
@@ -32,11 +33,13 @@ class DaKa(object):
         return self.cookiestr
     
     def post(self):
+        """Post the hitcard info"""
         self.update_sess()
         res = self.sess.post(self.save_url, data=self.info)
         return json.loads(res.text)
     
     def update_sess(self):
+        """Update session with new cookie"""
         self.sess.headers.update({
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36',
             'Cookie': self.cookiestr,
@@ -47,6 +50,7 @@ class DaKa(object):
         return "%4d%02d%02d" %(today.year, today.month, today.day)
         
     def get_info(self, html=None):
+        """Get hitcard info, which is the old info with updated new time."""
         if not html:
             self.update_sess()
             res = self.sess.get(self.base_url)
@@ -64,6 +68,15 @@ class DaKa(object):
         self.info = new_info
         return new_info
 
+    def _set_driver(self):
+        """Set driver according to the os system"""
+        if sys.platform == "win32":
+            phantomjs_path = "./phantomjs.exe"
+        elif sys.platform == "darwin":
+            phantomjs_path = "./phantomjs-mac"
+        else:
+            phantomjs_path = "./phantomjs-linux"
+        return webdriver.PhantomJS(phantomjs_path)
 
 def main(username, password):
     print("\n🚌 打卡任务启动")
@@ -102,6 +115,7 @@ if __name__=="__main__":
         hour = input("\thour: ") or 6
         minute = input("\tminute: ") or 5
 
+    # Schedule task
     scheduler = BlockingScheduler()
     scheduler.add_job(main, 'cron', args=[username, password], hour=hour, minute=minute)
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
