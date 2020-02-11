@@ -5,6 +5,8 @@
  - 可定时，默认为每天6点5分
  - 默认每次提交上次所提交的内容（只有时间部分更新）
  
+ 项目用于学习交流，仅用于各项无异常时打卡，如有身体不适等情况还请自行如实打卡~
+ 
 <img src="https://github.com/Tishacy/ZJU-nCov-Hitcarder/raw/master/demo.png" width="500px"/>
 
 
